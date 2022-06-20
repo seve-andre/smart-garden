@@ -21,7 +21,7 @@ void setup() {
  
 void loop() {
   brightnessValue = analogRead(pinPhotoresistance);
-  int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 0, 8);
+  int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 8);
   Serial.print("sensor = " );
   Serial.println(brightnessMapped);
  
