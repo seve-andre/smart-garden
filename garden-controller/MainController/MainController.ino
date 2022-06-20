@@ -22,8 +22,20 @@ void setup() {
 void loop() {
   brightnessValue = analogRead(pinPhotoresistance);
   int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 8);
-  Serial.print("sensor = " );
-  Serial.println(brightnessMapped);
+  //Serial.print("sensor = " );
+  //Serial.println(brightnessMapped);
+
+  if (brightnessMapped < 5) {
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+
+    
+  } else if (brightnessMapped <= 2) {
+     //Parte Servo Motore 
+  } else {
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+  }
  
   delay(1000);
 }
