@@ -21,21 +21,40 @@ void setup() {
  
 void loop() {
   brightnessValue = analogRead(pinPhotoresistance);
-  int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 9);
-  Serial.print("sensor = " );
-  Serial.println(brightnessMapped);
+  int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 8);
+  //Serial.print("sensor = " );
+  //Serial.println(brightnessMapped);
 
   if (brightnessMapped < 5) {
+    int fadeMapped = (unsigned int) map(brightnessMapped, 1, 8, 0, 4);
+    
     digitalWrite(LED2, HIGH);
     digitalWrite(LED3, HIGH);
-
     
+    Serial.print("fade value = ");
+    Serial.println(fadeMapped); 
+
+    // set the fade of pins:
+    analogWrite(LED0, fadeMapped);
+    analogWrite(LED1, fadeMapped);
   } else if (brightnessMapped <= 2) {
      //Parte Servo Motore 
   } else {
+    digitalWrite(LED0, LOW);
+    digitalWrite(LED1, LOW);
     digitalWrite(LED2, LOW);
     digitalWrite(LED3, LOW);
   }
+
+
+
+  // change the brightness for next time through the loop:
+  //brightness = brightness + fadeAmount;
+
+  // reverse the direction of the fading at the ends of the fade:
+  //if (brightness <= 0 || brightness >= 255) {
+    //fadeAmount = -fadeAmount;
+  //}
  
   delay(1000);
 }
