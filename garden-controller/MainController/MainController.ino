@@ -1,26 +1,29 @@
+/* SENSORS */
 int pinPhotoresistance = A0;
-int led0 = 3;
-int led1 = 4;
-int led2 = 5;
-int led3 = 6;
+int LED0 = 3;
+int LED1 = 4;
+int LED2 = 5;
+int LED3 = 6;
 
+/* LOGICS */
 int brightnessValue = 0;
 
 
 void setup() {
   Serial.begin(9600);
   pinMode(pinPhotoresistance, INPUT);
-  pinMode (led0, OUTPUT);
-  pinMode (led1, OUTPUT);
-  pinMode (led2, OUTPUT);
-  pinMode (led3, OUTPUT);
+  pinMode (LED0, OUTPUT);
+  pinMode (LED1, OUTPUT);
+  pinMode (LED2, OUTPUT);
+  pinMode (LED3, OUTPUT);
 
 }
  
 void loop() {
   brightnessValue = analogRead(pinPhotoresistance);
+  int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 0, 8);
   Serial.print("sensor = " );
-  Serial.println(brightnessValue);
+  Serial.println(brightnessMapped);
  
   delay(1000);
 }
