@@ -21,9 +21,9 @@ void setup() {
  
 void loop() {
   brightnessValue = analogRead(pinPhotoresistance);
-  int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 8);
-  //Serial.print("sensor = " );
-  //Serial.println(brightnessMapped);
+  int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 9);
+  Serial.print("sensor = " );
+  Serial.println(brightnessMapped);
 
   if (brightnessMapped < 5) {
     digitalWrite(LED2, HIGH);
