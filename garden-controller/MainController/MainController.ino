@@ -12,14 +12,16 @@ int brightnessValue = 0;
 int temperatureValue = 0;
 
 
+#define VCC ((float)5)
+
 void setup() {
   Serial.begin(9600);
-  pinMode(pinTemperature, INPUT);
   pinMode(pinPhotoresistance, INPUT);
-  pinMode (LED0, OUTPUT);
-  pinMode (LED1, OUTPUT);
-  pinMode (LED2, OUTPUT);
-  pinMode (LED3, OUTPUT);
+  pinMode(LED0, OUTPUT);
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(pinTemperature, INPUT);
 
 }
  
@@ -29,17 +31,16 @@ void loop() {
   //Serial.print("sensor = " );
   //Serial.println(brightnessMapped);
   temperatureValue = analogRead(pinTemperature);
+  float valueInVolt = temperatureValue*VCC/1023;  
+  float valueInCelsius = valueInVolt/0.01;
   
-  Serial.println(temperatureValue);
+  Serial.println(String("temp: ") + valueInCelsius);
 
   if (brightnessMapped < 5) {
     int fadeMapped = (unsigned int) map(brightnessMapped, 1, 5, 0, 4);
     
     digitalWrite(LED2, HIGH);
     digitalWrite(LED3, HIGH);
-    
-    Serial.print("fade value = ");
-    Serial.println(fadeMapped); 
 
     // set the fade of pins:
     analogWrite(LED0, fadeMapped);
