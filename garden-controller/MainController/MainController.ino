@@ -14,6 +14,7 @@ int temperatureValue = 0;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(pinTemperature, INPUT);
   pinMode(pinPhotoresistance, INPUT);
   pinMode (LED0, OUTPUT);
   pinMode (LED1, OUTPUT);
@@ -27,7 +28,7 @@ void loop() {
   int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 8);
   //Serial.print("sensor = " );
   //Serial.println(brightnessMapped);
-  temperatureValue = analogRead(temperatureValue);
+  temperatureValue = analogRead(pinTemperature);
   
   Serial.println(temperatureValue);
 
