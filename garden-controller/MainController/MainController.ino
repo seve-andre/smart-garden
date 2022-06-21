@@ -1,5 +1,7 @@
 /* SENSORS */
 int pinPhotoresistance = A0;
+int pinTemperature = A1;
+
 int LED0 = 3;
 int LED1 = 4;
 int LED2 = 5;
@@ -7,6 +9,7 @@ int LED3 = 6;
 
 /* LOGICS */
 int brightnessValue = 0;
+int temperatureValue = 0;
 
 
 void setup() {
@@ -24,9 +27,12 @@ void loop() {
   int brightnessMapped = (unsigned int) map(brightnessValue, 0, 1023, 1, 8);
   //Serial.print("sensor = " );
   //Serial.println(brightnessMapped);
+  temperatureValue = analogRead(temperatureValue);
+  
+  Serial.println(temperatureValue);
 
   if (brightnessMapped < 5) {
-    int fadeMapped = (unsigned int) map(brightnessMapped, 1, 8, 0, 4);
+    int fadeMapped = (unsigned int) map(brightnessMapped, 1, 5, 0, 4);
     
     digitalWrite(LED2, HIGH);
     digitalWrite(LED3, HIGH);
@@ -46,8 +52,6 @@ void loop() {
     digitalWrite(LED3, LOW);
   }
 
-
-
   // change the brightness for next time through the loop:
   //brightness = brightness + fadeAmount;
 
@@ -56,5 +60,5 @@ void loop() {
     //fadeAmount = -fadeAmount;
   //}
  
-  delay(1000);
+  delay(50);
 }
