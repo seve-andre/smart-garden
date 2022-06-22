@@ -23,13 +23,14 @@ void setup() {
     checkTemperatureTask->init(40);
 
     Task* checkLightIntensityTask = new CheckLightIntensityTask(irrigationTask);
-    checkTemperatureTask->init(40);
+    checkLightIntensityTask->init(40);
 
     scheduler.addTask(checkTemperatureTask);
     scheduler.addTask(checkLightIntensityTask);
+    scheduler.addTask(irrigationTask);
 
     // initially the state of the garden is set to AUTO
-    gardenState = AUTO;
+    // gardenState = AUTO;
 }
 
 void loop() {
