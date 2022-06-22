@@ -1,3 +1,7 @@
+#include "Scheduler.h"
+#include "Task.h"
+#include "ServoTask.h"
+
 /* SENSORS */
 int pinPhotoresistance = A0;
 int pinTemperature = A1;
@@ -11,6 +15,8 @@ int LED3 = 6;
 int brightnessValue = 0;
 int temperatureValue = 0;
 
+Scheduler sched;
+
 
 void setup() {
   Serial.begin(9600);
@@ -21,6 +27,12 @@ void setup() {
   pinMode (LED2, OUTPUT);
   pinMode (LED3, OUTPUT);
 
+  sched.init(10);
+  Task* servoTask = new ServoTask(9);
+  servoTask->init(40);
+
+  sched.addTask(servoTask); 
+
 }
  
 void loop() {
@@ -29,7 +41,9 @@ void loop() {
   //Serial.print("sensor = " );
   //Serial.println(brightnessMapped);
   temperatureValue = analogRead(pinTemperature);
-  int temperatureMapped = (unsigned int) map(temperatureValue, 0, 30, 1, 5);
+  float valueInVolt = temperatureValue*5/1023;  
+  float valueInCelsius = valueInVolt/0.01;
+  int temperatureMapped = (unsigned int) map(valueInCelsius, 0, 30, 1, 5);
   
   Serial.println(temperatureMapped);
 
@@ -61,6 +75,8 @@ void loop() {
   //if (brightness <= 0 || brightness >= 255) {
     //fadeAmount = -fadeAmount;
   //}
+
+  sched.schedule();
  
   delay(50);
 }
