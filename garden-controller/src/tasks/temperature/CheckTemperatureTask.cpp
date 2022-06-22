@@ -14,7 +14,7 @@ void CheckTemperatureTask::tick() {
 
     if (temperatureMapped == 5 &&
         this->irrigationTask->state == this->irrigationTask->State::PAUSE) {
-        gardenState = ALARM;
+        // gardenState = ALARM;
     } else {
         this->irrigationTask->setSpeed(temperatureMapped);
     }
