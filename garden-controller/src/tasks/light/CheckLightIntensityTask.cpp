@@ -15,13 +15,18 @@ CheckLightIntensityTask::CheckLightIntensityTask(IrrigationTask* irrTask) {
 void CheckLightIntensityTask::tick() {
     int lightIntensity = this->lightSensor->getLightIntensity();
 
-    if (lightIntensity < 5) {
+    Serial.println(lightIntensity);
+
+    if (lightIntensity >= 2 && lightIntensity < 5) {
         this->led1->switchOn();
         this->led2->switchOn();
     } else if (lightIntensity < 2) {
         // activate irrigation system
-        // this->irrigationTask->activateIrrigation();
-        this->irrigationTask->setActive(true);
+        if (!this->irrigationTask->isActive()) {
+            // resetta tStop
+            this->irrigationTask->resetStopTimer();
+            this->irrigationTask->setActive(true);
+        }
     } else {
     }
 }
