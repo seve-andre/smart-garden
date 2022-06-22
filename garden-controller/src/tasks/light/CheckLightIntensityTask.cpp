@@ -1,7 +1,8 @@
 #include "CheckLightIntensityTask.h"
+#include "Config.h"
 
 CheckLightIntensityTask::CheckLightIntensityTask() {
-    this->lightSensor = new LightSensorImpl(1);
+    this->lightSensor = new LightSensorImpl(PHOTORESISTOR_PIN);
 }
 
 void CheckLightIntensityTask::tick() {
