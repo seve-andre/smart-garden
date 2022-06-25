@@ -1,5 +1,4 @@
 #include "Led.h"
-
 #include "Arduino.h"
 
 Led::Led(int pin) {
@@ -13,8 +12,4 @@ void Led::switchOn() {
 
 void Led::switchOff() {
     digitalWrite(pin, LOW);
-}
-
-void Led::turnOnWithIntensity(int intensity) {
-    analogWrite(pin, map(intensity, 1, 5, 50, 255));
 }

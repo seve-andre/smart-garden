@@ -8,7 +8,6 @@ class Led : public Light {
     Led(int pin);
     void switchOn();
     void switchOff();
-    void turnOnWithIntensity(int intensity);
 
    protected:
     int pin;

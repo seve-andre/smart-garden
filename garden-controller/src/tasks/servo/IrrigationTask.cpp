@@ -1,10 +1,12 @@
 #include "IrrigationTask.h"
+
 #include "Config.h"
+#include "components/serial/MsgService.h"
 #include "components/servo/ServoMotorImpl.h"
 
 IrrigationTask::IrrigationTask() {
     this->servo = new ServoMotorImpl(SERVO_PIN);
-    this->state = ONGOING;
+    this->state = IDLE;
     this->irrigationTime = 10000;
     this->speed = 1;
     this->pos = 0;
@@ -21,6 +23,15 @@ IrrigationTask::IrrigationTask() {
 void IrrigationTask::tick() {
     switch (state) {
         case IDLE: {
+            // wait for speed from sensors of the esp
+            Msg* msg = MsgService.receiveMsg();
+            String msgContent = msg->getContent();
+
+            if (msgContent.startsWith("speed")) {
+                int speed = msgContent.charAt(msgContent.length() - 1) - '0';
+                this->speed = speed;
+                this->state = ONGOING;
+            }
             break;
         }
         case ONGOING: {
@@ -41,10 +52,6 @@ void IrrigationTask::tick() {
     }
 }
 
-void IrrigationTask::setSpeed(int speed) {
-    this->speed = speed;
-}
-
 void IrrigationTask::startServo() {
     if (!firstTimerInit) {
         pos = 0;
@@ -58,16 +65,29 @@ void IrrigationTask::startServo() {
 
 void IrrigationTask::moveServoTo180() {
     if (pos < 180 && activeServo) {
-        activeServo = false;  // tell servo to go to position in variable 'pos'
+        // tell servo to go to position in variable 'pos'
+        activeServo = false;
         noInterrupts();
         pos += 3;
         interrupts();
         servo->setPosition(pos);
-        // delay(15);                                // waits 90ms for the servo
-        // to reach the position
-    } else if (pos >= 180) {
+    } else if (pos == 180) {
         startServoTo180 = false;
         startServoTo0 = true;
+    }
+}
+
+void IrrigationTask::moveServoTo0() {
+    if (pos > 0 && activeServo) {
+        // tell servo to go to position in variable 'pos'
+        activeServo = false;
+        noInterrupts();
+        pos -= 3;
+        interrupts();
+        this->servo->setPosition(pos);
+    } else if (pos == 0) {
+        startServoTo180 = true;
+        startServoTo0 = false;
     }
 }
 
@@ -86,15 +106,15 @@ void IrrigationTask::stopServo() {
 void IrrigationTask::sleepIrrigation() {
     // Interrupt
     if ((millis() - tSleep) >= 60000) {
-        this->state = ONGOING;
         this->setActive(false);
+        this->state = ONGOING;
         Serial.println("i'm sleeping baby");
     }
 }
 
 // Timer per tick di Servo
 void IrrigationTask::timerServo() {
-    int servoSpeedTime = 0;
+    unsigned int servoSpeedTime = 0;
     switch (this->speed) {
         case 1:
             servoSpeedTime = 165;
@@ -120,7 +140,7 @@ void IrrigationTask::timerServo() {
     }
 }
 
-void IrrigationTask::resetStopTimer() {
+void IrrigationTask::reset() {
     tStop = millis();
     tServo = millis();
 }

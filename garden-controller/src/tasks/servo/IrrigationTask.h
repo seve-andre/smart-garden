@@ -8,17 +8,20 @@ class IrrigationTask : public Task {
    public:
     IrrigationTask();
     void tick();
-    enum State { IDLE, ONGOING, PAUSE, COMPLETED } state;
-    void setSpeed(int speed);
-    void resetStopTimer();
+    enum State { IDLE,
+                 ONGOING,
+                 PAUSE,
+                 COMPLETED } state;
+    void reset();
 
    private:
     int speed;
     ServoMotor* servo;
     long irrigationTime;
-    int pos;
+    unsigned int pos;
     void startServo();
     void moveServoTo180();
+    void moveServoTo0();
     void stopServo();
     void timerServo();
     void sleepIrrigation();
@@ -27,9 +30,9 @@ class IrrigationTask : public Task {
     bool startServoTo180;
     bool activeServo;
     bool startServoTo0;
-    long tStop;
-    long tServo;
-    long tSleep;
+    unsigned long tStop;
+    unsigned long tServo;
+    unsigned long tSleep;
 };
 
 #endif
