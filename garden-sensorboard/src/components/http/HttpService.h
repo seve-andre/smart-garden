@@ -6,7 +6,7 @@
 class HttpService {
    public:
     HttpService();
-    int post();
+    int post(int intensity);
 };
 
 #endif

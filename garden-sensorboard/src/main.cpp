@@ -19,13 +19,14 @@ HttpService* httpService;
 WifiConnector* wifiConnector;
 
 void setup() {
+    Serial.begin(115200);
     // hardware
     tempSensor = new TempSensorLM35(TEMP_SENSOR_PIN);
     lightSensor = new LightSensorImpl(PHOTORESISTOR_PIN);
     led = new Led(LED_PIN);
 
     // http
-    wifiConnector = new WifiConnector("", "");
+    wifiConnector = new WifiConnector("", PASSWORD);
     wifiConnector->connect();
     httpService = new HttpService();
 }
@@ -36,7 +37,13 @@ void loop() {
 
         if (lightIntensity < 5) {
             // turn led1 and led2 on, set intensity for the other 2
-            // httpService->post();
+            int code = httpService->post(lightIntensity);
+            if (code == 200) {
+                Serial.println("ok");
+            } else {
+                Serial.println(String("error: ") + code);
+            }
+            delay(5000);
 
             if (lightIntensity < 2) {
                 // activate irrigation system (servo)
@@ -47,7 +54,7 @@ void loop() {
         float temperature = tempSensor->getTemperature();
         int temperatureMapped = map(temperature, 0, 30, 1, 5);
 
-        if (temperatureMapped == 5 /* && pause */) {
+        if (temperatureMapped == 5) {
             // ALARM
             // httpService->post();
             led->switchOff();
