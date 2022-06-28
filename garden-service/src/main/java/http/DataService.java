@@ -7,6 +7,9 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import jssc.SerialPortException;
+import serial.CommChannel;
+import serial.SerialCommChannel;
 
 import java.util.LinkedList;
 
@@ -17,11 +20,17 @@ public class DataService extends AbstractVerticle {
 
     private static final int MAX_SIZE = 10;
     private final int port;
-    private LinkedList<DataPoint> values;
+    private final LinkedList<DataPoint> values;
+    private CommChannel channel;
 
     public DataService(int port) {
         values = new LinkedList<>();
         this.port = port;
+        try {
+            this.channel = new SerialCommChannel("COM5", 115200);
+        } catch (SerialPortException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -36,7 +45,6 @@ public class DataService extends AbstractVerticle {
                 .listen(port);
 
 
-
         log("Service ready.");
     }
 
@@ -48,14 +56,21 @@ public class DataService extends AbstractVerticle {
             sendError(400, response);
         } else {
             int intensity = res.getInteger("intensity");
+            int temperature = res.getInteger("temperature");
+            String state = res.getString("state");
 
-            values.addFirst(new DataPoint(intensity));
+            values.addFirst(new DataPoint(intensity, temperature, state));
             if (values.size() > MAX_SIZE) {
                 values.removeLast();
             }
 
-            log("Intensity: " + intensity);
             response.setStatusCode(200).end();
+
+            vertx.executeBlocking(
+                    promise -> {
+                        channel.sendMsg("i:" + intensity + "t:" + temperature + "s:" + state);
+                        promise.complete();
+                    });
         }
     }
 
@@ -64,6 +79,8 @@ public class DataService extends AbstractVerticle {
         for (DataPoint p : values) {
             JsonObject data = new JsonObject();
             data.put("intensity", p.getLightIntensity());
+            data.put("temperature", p.getTemperature());
+            data.put("state", p.getState());
             arr.add(data);
         }
         routingContext.response()

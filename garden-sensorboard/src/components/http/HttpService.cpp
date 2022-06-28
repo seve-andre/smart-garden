@@ -10,12 +10,14 @@ char msg[100];
 HttpService::HttpService() {
 }
 
-int HttpService::post(int intensity) {
+int HttpService::post(int lightIntensity, int temperatureMapped, String state) {
     HTTPClient http;
-    http.begin("https://d3e0-80-182-124-4.eu.ngrok.io/api/data");
+    http.begin("https://ab0e-95-244-50-244.eu.ngrok.io//api/data");
     http.addHeader("Content-Type", "application/json");
 
-    jsonPost["intensity"] = intensity;
+    jsonPost["intensity"] = lightIntensity;
+    jsonPost["temperature"] = temperatureMapped;
+    jsonPost["state"] = state;
 
     serializeJson(jsonPost, msg);
 
