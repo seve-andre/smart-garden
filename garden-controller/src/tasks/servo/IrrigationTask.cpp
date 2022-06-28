@@ -1,6 +1,7 @@
 #include "IrrigationTask.h"
 
 #include "Config.h"
+#include "Util.h"
 #include "components/serial/MsgService.h"
 #include "components/servo/ServoMotorImpl.h"
 
@@ -23,15 +24,25 @@ IrrigationTask::IrrigationTask() {
 void IrrigationTask::tick() {
     switch (state) {
         case IDLE: {
-            // wait for speed from sensors of the esp
-            Msg* msg = MsgService.receiveMsg();
-            String msgContent = msg->getContent();
+            /* if (MsgService.isMsgAvailable()) {
+                // wait for speed from sensors of the esp
+                Msg* msg = MsgService.receiveMsg();
+                String msgContent = msg->getContent();
 
-            if (msgContent.startsWith("speed")) {
-                int speed = msgContent.charAt(msgContent.length() - 1) - '0';
-                this->speed = speed;
-                this->state = ONGOING;
+                Serial.print(msgContent);
+
+                int intensity = toDigit(msgContent[2]);
+                int temperature = toDigit(msgContent[6]); */
+
+            /* if the intensity is less than 2,
+                the speed is set to the mapped temperature
+                and the irrigation system starts to work
+            */
+            /* if (intensity < 2) {
+                this->speed = temperature;
+                state = ONGOING;
             }
+        } */
             break;
         }
         case ONGOING: {
@@ -106,9 +117,8 @@ void IrrigationTask::stopServo() {
 void IrrigationTask::sleepIrrigation() {
     // Interrupt
     if ((millis() - tSleep) >= 60000) {
-        this->setActive(false);
-        this->state = ONGOING;
-        Serial.println("i'm sleeping baby");
+        // after staying asleep for 1 minute, goes back to getting intensity and temp values
+        this->state = IDLE;
     }
 }
 
