@@ -1,6 +1,7 @@
 #include "LightSystemTask.h"
 
 #include "Config.h"
+#include "Util.h"
 #include "components/serial/MsgService.h"
 
 LightSystemTask::LightSystemTask() {
@@ -17,18 +18,21 @@ void LightSystemTask::tick() {
         case IDLE: {
         }
         case ONGOING: {
-            Msg* msg = MsgService.receiveMsg();
-            String msgContent = msg->getContent();
+            if (MsgService.isMsgAvailable()) {
+                Msg* msg = MsgService.receiveMsg();
+                String msgContent = msg->getContent();
 
-            if (msgContent.startsWith("intensity")) {
-                int intensity = msgContent.charAt(msgContent.length() - 1) - '0';
+                // value 0-7
+                int intensity = toDigit(msgContent[2]);
 
-                this->led1->switchOn();
-                this->led2->switchOn();
+                if (intensity < 5) {
+                    this->led1->switchOn();
+                    this->led2->switchOn();
 
-                // turn on based on intensity
-                this->led3->turnOnWithIntensity(intensity);
-                this->led4->turnOnWithIntensity(intensity);
+                    // intensity value is already in range 0-4 when gets in here
+                    this->led3->turnOnWithIntensity(intensity);
+                    this->led4->turnOnWithIntensity(intensity);
+                }
             }
             break;
         }
