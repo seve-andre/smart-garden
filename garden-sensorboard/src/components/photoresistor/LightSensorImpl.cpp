@@ -8,5 +8,5 @@ LightSensorImpl::LightSensorImpl(int pin) {
 
 int LightSensorImpl::getLightIntensity() {
     int value = analogRead(pin);
-    return map(value, 0, 4095, 1, 8);
+    return map(value, 0, 4095, 0, 7);
 }
