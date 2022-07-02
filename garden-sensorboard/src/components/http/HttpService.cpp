@@ -12,7 +12,7 @@ HttpService::HttpService() {
 
 int HttpService::post(int lightIntensity, int temperatureMapped, String state) {
     HTTPClient http;
-    http.begin("https://ab0e-95-244-50-244.eu.ngrok.io//api/data");
+    http.begin("https://3e3b-95-244-50-244.eu.ngrok.io/api/data");
     http.addHeader("Content-Type", "application/json");
 
     jsonPost["intensity"] = lightIntensity;

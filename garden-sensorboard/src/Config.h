@@ -5,6 +5,7 @@
 #define TEMP_SENSOR_PIN 1
 #define LED_PIN 7
 
+#define SSID ""
 #define PASSWORD ""
 
 #endif

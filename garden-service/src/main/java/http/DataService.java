@@ -26,11 +26,11 @@ public class DataService extends AbstractVerticle {
     public DataService(int port) {
         values = new LinkedList<>();
         this.port = port;
-        try {
+        /*try {
             this.channel = new SerialCommChannel("COM5", 115200);
         } catch (SerialPortException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
@@ -44,13 +44,11 @@ public class DataService extends AbstractVerticle {
                 .requestHandler(router)
                 .listen(port);
 
-
         log("Service ready.");
     }
 
     private void handleAddNewData(RoutingContext routingContext) {
         HttpServerResponse response = routingContext.response();
-        // log("new msg "+routingContext.getBodyAsString());
         JsonObject res = routingContext.getBodyAsJson();
         if (res == null) {
             sendError(400, response);
@@ -66,11 +64,8 @@ public class DataService extends AbstractVerticle {
 
             response.setStatusCode(200).end();
 
-            vertx.executeBlocking(
-                    promise -> {
-                        channel.sendMsg("i:" + intensity + "t:" + temperature + "s:" + state);
-                        promise.complete();
-                    });
+//            channel.sendMsg("p:" + intensity + "t:" + temperature + "s:" + state);
+            System.out.println("p:" + intensity + "t:" + temperature + "s:" + state);
         }
     }
 
