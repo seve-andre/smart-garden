@@ -24,25 +24,7 @@ IrrigationTask::IrrigationTask() {
 void IrrigationTask::tick() {
     switch (state) {
         case IDLE: {
-            /* if (MsgService.isMsgAvailable()) {
-                // wait for speed from sensors of the esp
-                Msg* msg = MsgService.receiveMsg();
-                String msgContent = msg->getContent();
-
-                Serial.print(msgContent);
-
-                int intensity = toDigit(msgContent[2]);
-                int temperature = toDigit(msgContent[6]); */
-
-            /* if the intensity is less than 2,
-                the speed is set to the mapped temperature
-                and the irrigation system starts to work
-            */
-            /* if (intensity < 2) {
-                this->speed = temperature;
-                state = ONGOING;
-            }
-        } */
+            // wait for lightSystemTask to change state
             break;
         }
         case ONGOING: {
@@ -53,7 +35,6 @@ void IrrigationTask::tick() {
             break;
         }
         case PAUSE: {
-            // timer di 1 minuto; allo scadere impostare setActive(false)
             sleepIrrigation();
             break;
         }
@@ -79,7 +60,7 @@ void IrrigationTask::moveServoTo180() {
         // tell servo to go to position in variable 'pos'
         activeServo = false;
         noInterrupts();
-        pos += 3;
+        pos += 6;
         interrupts();
         servo->setPosition(pos);
     } else if (pos == 180) {
@@ -93,7 +74,7 @@ void IrrigationTask::moveServoTo0() {
         // tell servo to go to position in variable 'pos'
         activeServo = false;
         noInterrupts();
-        pos -= 3;
+        pos -= 6;
         interrupts();
         this->servo->setPosition(pos);
     } else if (pos == 0) {

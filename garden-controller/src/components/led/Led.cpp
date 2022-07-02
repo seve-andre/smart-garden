@@ -30,5 +30,6 @@ void Led::turnOnWithIntensity(int intensity) {
         Serial.println("You are not allowed to use turnOnWithIntensity method on a non-pwm pin.");
     }
 
-    analogWrite(pin, map(intensity, 0, 4, 50, 255));
+    int val = int(map(intensity, 0, 4, 5, 255));
+    analogWrite(pin, val);
 }

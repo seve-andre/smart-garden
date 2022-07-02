@@ -14,7 +14,6 @@ class IrrigationTask : public Task {
                  COMPLETED } state;
     void reset();
 
-   private:
     int speed;
     ServoMotor* servo;
     long irrigationTime;

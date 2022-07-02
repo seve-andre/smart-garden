@@ -3,10 +3,11 @@
 
 #include "components/led/Led.h"
 #include "tasks/Task.h"
+#include "tasks/servo/IrrigationTask.h"
 
 class LightSystemTask : public Task {
    public:
-    LightSystemTask();
+    LightSystemTask(IrrigationTask* irrigationTask);
     void tick();
 
    private:
@@ -14,8 +15,7 @@ class LightSystemTask : public Task {
     Led* led2;
     Led* led3;
     Led* led4;
-    enum { IDLE,
-           ONGOING } state;
+    IrrigationTask* irrigationTask;
 };
 
 #endif

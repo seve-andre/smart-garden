@@ -10,7 +10,7 @@
 #include "tasks/servo/IrrigationTask.h"
 
 Scheduler scheduler;
-MsgServiceBT btMsgService(BT_RX_PIN, BT_TX_PIN);
+// MsgServiceBT btMsgService(BT_RX_PIN, BT_TX_PIN);
 uint8_t gardenState;
 
 void setup() {
@@ -18,14 +18,14 @@ void setup() {
     MsgService.init();
 
     // initializes bluetooth messagging service
-    btMsgService.init();
+    // btMsgService.init();
 
     scheduler.init(10);
 
     Task *irrigationTask = new IrrigationTask();
     irrigationTask->init(40);
 
-    Task *lightSystemTask = new LightSystemTask();
+    Task *lightSystemTask = new LightSystemTask((IrrigationTask *)irrigationTask);
     lightSystemTask->init(40);
 
     scheduler.addTask(irrigationTask);
