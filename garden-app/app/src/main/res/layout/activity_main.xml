@@ -20,7 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:editable="false"
             android:text="Smart Garden"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -29,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/allerBtn"
+            android:id="@+id/btnAlarm"
             android:layout_width="60dp"
             android:layout_height="0dp"
             android:layout_marginEnd="10dp"
@@ -162,7 +161,7 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/incrLed3"
+                        android:id="@+id/btnIncreaseLed3"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:text="+"
@@ -179,10 +178,10 @@
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/incrLed3" />
+                        app:layout_constraintTop_toBottomOf="@+id/btnIncreaseLed3" />
 
                     <Button
-                        android:id="@+id/decrLed3"
+                        android:id="@+id/btnDecreaseLed3"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:text="-"
@@ -217,7 +216,7 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/incrLed4"
+                        android:id="@+id/btnIncreaseLed4"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:text="+"
@@ -234,10 +233,10 @@
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/incrLed4" />
+                        app:layout_constraintTop_toBottomOf="@+id/btnIncreaseLed4" />
 
                     <Button
-                        android:id="@+id/decrLed4"
+                        android:id="@+id/btnDecreaseLed4"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:text="-"
@@ -254,7 +253,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_weight="1"></Space>
+            android:layout_weight="1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -281,7 +280,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView11">
 
                 <Button
-                    android:id="@+id/irrigationBtn"
+                    android:id="@+id/btnIrrigation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Open/Close"
@@ -294,11 +293,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/irrigationBtn"
+                    app:layout_constraintStart_toEndOf="@+id/btnIrrigation"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <Button
-                        android:id="@+id/decrIrrig"
+                        android:id="@+id/btnDecreaseSpeed"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:text="-"
@@ -308,25 +307,25 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textIrrig"
+                        android:id="@+id/textIrrigationSpeed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="0"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/decrIrrig"
+                        app:layout_constraintStart_toEndOf="@+id/btnDecreaseSpeed"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/incrIrrig"
+                        android:id="@+id/btnIncreaseSpeed"
                         android:layout_width="60sp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="+"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textIrrig"
+                        app:layout_constraintStart_toEndOf="@+id/textIrrigationSpeed"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -362,7 +361,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/requireManualBtn"
+        android:id="@+id/btnRequireManualMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -373,14 +372,14 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <Button
-        android:id="@+id/requireAutomaticBtn"
+        android:id="@+id/btnRequireAutoMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Require Automatic Control"
+        android:text="Require Auto Control"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requireManualBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRequireManualMode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
