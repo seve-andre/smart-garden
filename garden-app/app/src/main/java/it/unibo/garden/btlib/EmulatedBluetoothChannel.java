@@ -2,7 +2,7 @@ package it.unibo.garden.btlib;
 
 import android.os.Message;
 import android.util.Log;
-import it.unibo.garden.btlib.utils.C;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,16 +10,15 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Arrays;
 
-
 public final class EmulatedBluetoothChannel extends BluetoothChannel {
 
-    EmulatedBluetoothChannel(Socket socket) {
+    EmulatedBluetoothChannel(Socket socket){
         worker = new TcpWorker(socket);
         new Thread(worker).start();
     }
 
     @Override
-    public String getRemoteDeviceName() {
+    public String getRemoteDeviceName(){
         return "Arduino through PC";
     }
 
@@ -40,12 +39,12 @@ public final class EmulatedBluetoothChannel extends BluetoothChannel {
             try {
                 tmpIn = socket.getInputStream();
             } catch (IOException e) {
-                Log.e(C.LIB_TAG, "Error occurred when creating input stream", e);
+                Log.e(it.unibo.garden.bt.C.LIB_TAG, "Error occurred when creating input stream", e);
             }
             try {
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
-                Log.e(C.LIB_TAG, "Error occurred when creating output stream", e);
+                Log.e(it.unibo.garden.bt.C.LIB_TAG, "Error occurred when creating output stream", e);
             }
 
             inputStream = tmpIn;
@@ -63,22 +62,23 @@ public final class EmulatedBluetoothChannel extends BluetoothChannel {
 
                     while ((inputByte = input.readByte()) != 0) {
                         char chr = (char) inputByte;
-                        if (chr != C.message.MESSAGE_TERMINATOR) {
+                        if(chr != it.unibo.garden.bt.C.message.MESSAGE_TERMINATOR){
                             readbuffer.append(chr);
                         } else {
                             String inputString = readbuffer.toString();
                             Message receivedMessage = getBTChannelHandler().obtainMessage(
-                                    C.channel.MESSAGE_RECEIVED,
-                                    inputString.getBytes().length,
-                                    -1,
-                                    inputString.getBytes()
+                                it.unibo.garden.bt.C.channel.MESSAGE_RECEIVED,
+                                inputString.getBytes().length,
+                                -1,
+                                inputString.getBytes()
                             );
                             receivedMessage.sendToTarget();
 
                             readbuffer = new StringBuilder();
                         }
                     }
-                } catch (Exception e) {
+                }
+                catch(Exception e){
                     e.printStackTrace();
                 }
             }
@@ -86,16 +86,16 @@ public final class EmulatedBluetoothChannel extends BluetoothChannel {
 
         public void write(byte[] bytes) {
             try {
-                byte[] bytesToBeSent = Arrays.copyOf(bytes, bytes.length + 1);
-                bytesToBeSent[bytesToBeSent.length - 1] = C.message.MESSAGE_TERMINATOR;
+                byte[] bytesToBeSent = Arrays.copyOf(bytes, bytes.length+1);
+                bytesToBeSent[bytesToBeSent.length -1] = (byte) it.unibo.garden.bt.C.message.MESSAGE_TERMINATOR;
 
                 outputStream.write(bytesToBeSent);
 
                 Message writtenMsg = getBTChannelHandler().obtainMessage(
-                        C.channel.MESSAGE_SENT,
-                        -1,
-                        -1,
-                        bytes
+                    it.unibo.garden.bt.C.channel.MESSAGE_SENT,
+                    -1,
+                    -1,
+                    bytes
                 );
                 writtenMsg.sendToTarget();
             } catch (IOException e) {
@@ -107,7 +107,7 @@ public final class EmulatedBluetoothChannel extends BluetoothChannel {
             try {
                 socket.close();
             } catch (IOException e) {
-                Log.e(C.LIB_TAG, "Could not close the connect socket", e);
+                Log.e(it.unibo.garden.bt.C.LIB_TAG, "Could not close the connect socket", e);
             }
         }
     }

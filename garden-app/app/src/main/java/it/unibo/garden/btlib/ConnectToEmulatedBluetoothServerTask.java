@@ -1,10 +1,8 @@
 package it.unibo.garden.btlib;
 
-import it.unibo.garden.btlib.utils.C;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-
 
 public final class ConnectToEmulatedBluetoothServerTask extends ConnectionTask {
     private Socket socket;
@@ -16,7 +14,7 @@ public final class ConnectToEmulatedBluetoothServerTask extends ConnectionTask {
     @Override
     protected Integer doInBackground(Void... unused) {
         try {
-            socket = new Socket(InetAddress.getByName(C.emulator.HOST_IP), C.emulator.HOST_PORT);
+            socket = new Socket(InetAddress.getByName(it.unibo.garden.bt.C.emulator.HOST_IP), it.unibo.garden.bt.C.emulator.HOST_PORT);
         } catch (IOException e) {
             e.printStackTrace();
             try {

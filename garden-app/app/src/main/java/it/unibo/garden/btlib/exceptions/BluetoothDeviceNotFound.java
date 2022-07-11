@@ -1,3 +1,3 @@
-package it.unibo.garden.btlib.exceptions;
+package it.unibo.garden.bt;
 
 public class BluetoothDeviceNotFound extends Exception { }

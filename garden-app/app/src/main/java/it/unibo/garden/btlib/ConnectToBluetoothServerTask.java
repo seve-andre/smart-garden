@@ -1,6 +1,5 @@
 package it.unibo.garden.btlib;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 
@@ -11,7 +10,6 @@ public final class ConnectToBluetoothServerTask extends ConnectionTask {
 
     private BluetoothSocket btSocket = null;
 
-    @SuppressLint("MissingPermission")
     public ConnectToBluetoothServerTask(
             final BluetoothDevice serverBtDevice,
             final UUID uuid,
@@ -25,7 +23,6 @@ public final class ConnectToBluetoothServerTask extends ConnectionTask {
         }
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     protected Integer doInBackground(Void... unused) {
         try {

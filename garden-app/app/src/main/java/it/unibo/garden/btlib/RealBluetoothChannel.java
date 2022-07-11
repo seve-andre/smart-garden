@@ -1,10 +1,11 @@
 package it.unibo.garden.btlib;
 
-import android.annotation.SuppressLint;
+import static it.unibo.garden.bt.C.*;
+
 import android.bluetooth.BluetoothSocket;
 import android.os.Message;
 import android.util.Log;
-import it.unibo.garden.btlib.utils.C;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,15 +16,14 @@ public final class RealBluetoothChannel extends BluetoothChannel {
 
     private final String remoteDeviceName;
 
-    @SuppressLint("MissingPermission")
-    RealBluetoothChannel(BluetoothSocket socket) {
+    RealBluetoothChannel(BluetoothSocket socket){
         remoteDeviceName = socket.getRemoteDevice().getName();
         worker = new BluetoothWorker(socket);
         new Thread(worker).start();
     }
 
     @Override
-    public String getRemoteDeviceName() {
+    public String getRemoteDeviceName(){
         return remoteDeviceName;
     }
 
@@ -47,12 +47,12 @@ public final class RealBluetoothChannel extends BluetoothChannel {
             try {
                 tmpIn = socket.getInputStream();
             } catch (IOException e) {
-                Log.e(C.LIB_TAG, "Error occurred when creating input stream", e);
+                Log.e(LIB_TAG, "Error occurred when creating input stream", e);
             }
             try {
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
-                Log.e(C.LIB_TAG, "Error occurred when creating output stream", e);
+                Log.e(LIB_TAG, "Error occurred when creating output stream", e);
             }
 
             inputStream = tmpIn;
@@ -60,7 +60,7 @@ public final class RealBluetoothChannel extends BluetoothChannel {
         }
 
         public void run() {
-            while (true) {
+             while(true) {
                 try {
                     DataInputStream input = new DataInputStream(inputStream);
 
@@ -70,22 +70,22 @@ public final class RealBluetoothChannel extends BluetoothChannel {
 
                     while ((inputByte = input.readByte()) != 0) {
                         char chr = (char) inputByte;
-                        if (chr != C.message.MESSAGE_TERMINATOR) {
+                        if(chr != it.unibo.garden.bt.C.message.MESSAGE_TERMINATOR){
                             readBuffer.append(chr);
                         } else {
                             String inputString = readBuffer.toString();
                             Message receivedMessage = getBTChannelHandler().obtainMessage(
-                                    C.channel.MESSAGE_RECEIVED,
-                                    inputString.getBytes().length,
-                                    -1,
-                                    inputString.getBytes()
+                                it.unibo.garden.bt.C.channel.MESSAGE_RECEIVED,
+                                inputString.getBytes().length,
+                                -1,
+                                inputString.getBytes()
                             );
                             receivedMessage.sendToTarget();
                             readBuffer = new StringBuilder();
                         }
                     }
-                } catch (Exception e) {
-                    Log.d("Errro", "run: stringa vuotaaaa");
+                }
+                catch(Exception e){
                     e.printStackTrace();
                 }
             }
@@ -93,13 +93,13 @@ public final class RealBluetoothChannel extends BluetoothChannel {
 
         public void write(byte[] bytes) {
             try {
-                byte[] bytesToBeSent = Arrays.copyOf(bytes, bytes.length + 1);
-                bytesToBeSent[bytesToBeSent.length - 1] = C.message.MESSAGE_TERMINATOR;
+                byte[] bytesToBeSent = Arrays.copyOf(bytes, bytes.length+1);
+                bytesToBeSent[bytesToBeSent.length -1] = (byte) it.unibo.garden.bt.C.message.MESSAGE_TERMINATOR;
 
                 outputStream.write(bytesToBeSent);
 
                 Message writtenMsg = getBTChannelHandler().obtainMessage(
-                        C.channel.MESSAGE_SENT,
+                        it.unibo.garden.bt.C.channel.MESSAGE_SENT,
                         -1,
                         -1,
                         bytes
@@ -114,7 +114,7 @@ public final class RealBluetoothChannel extends BluetoothChannel {
             try {
                 socket.close();
             } catch (IOException e) {
-                Log.e(C.LIB_TAG, "Could not close the connect socket", e);
+                Log.e(it.unibo.garden.bt.C.LIB_TAG, "Could not close the connect socket", e);
             }
         }
     }

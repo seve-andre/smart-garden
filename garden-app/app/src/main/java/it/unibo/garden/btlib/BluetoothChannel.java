@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import it.unibo.garden.btlib.utils.C;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +52,13 @@ public abstract class BluetoothChannel implements CommChannel {
         @Override
         public void handleMessage(final Message message) {
 
-            if(message.what == C.channel.MESSAGE_RECEIVED) {
+            if(message.what == it.unibo.garden.bt.C.channel.MESSAGE_RECEIVED) {
                 for(Listener l : listeners){
                     l.onMessageReceived(new String((byte[])message.obj));
                 }
             }
 
-            if(message.what == C.channel.MESSAGE_SENT) {
+            if(message.what == it.unibo.garden.bt.C.channel.MESSAGE_SENT) {
                 for(Listener l : listeners){
                     l.onMessageSent(new String((byte[])message.obj));
                 }
