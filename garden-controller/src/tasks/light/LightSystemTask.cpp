@@ -64,6 +64,8 @@ void LightSystemTask::tick() {
                     // manual
                     this->state = MANUAL;
                 }
+
+                delete msg;
             }
             break;
         }
@@ -121,6 +123,8 @@ void LightSystemTask::tick() {
                     // alarm
                     this->state = AUTO;
                 }
+
+                delete msg;
             }
             break;
         }
