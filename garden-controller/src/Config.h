@@ -10,7 +10,7 @@
 
 #define SERVO_PIN 9
 
-#define BT_RX_PIN 0
-#define BT_TX_PIN 1
+#define BT_TXD_PIN 12
+#define BT_RXD_PIN 13
 
 #endif
