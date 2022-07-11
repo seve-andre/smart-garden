@@ -17,6 +17,10 @@ void Led::switchOff() {
     digitalWrite(pin, LOW);
 }
 
+bool Led::isOn() {
+    return digitalRead(pin);
+}
+
 void Led::turnOnWithIntensity(int intensity) {
     bool exists = false;
     for (int p : arduinoUnoPwmPins) {
