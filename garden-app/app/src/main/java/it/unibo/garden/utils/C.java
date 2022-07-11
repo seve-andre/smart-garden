@@ -1,4 +1,4 @@
-package it.unibo.garden.btlib.utils;
+package it.unibo.garden.bt;
 
 public class C {
     public static final String LIB_TAG = "BluetoothLib";
