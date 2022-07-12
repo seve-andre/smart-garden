@@ -52,6 +52,8 @@ void IrrigationTask::startServo() {
 
     if (startServoTo180) {
         moveServoTo180();
+    } else {
+        moveServoTo0();
     }
 }
 
@@ -83,11 +85,10 @@ void IrrigationTask::moveServoTo0() {
     }
 }
 
-// Timer per fine rotazione a 180° di Servo
 void IrrigationTask::stopServo() {
     // Interrupt
     if ((millis() - tStop) >= 15000) {
-        servo->off();
+        // servo->off();
         this->state = PAUSE;
         tStop = millis();
         tSleep = millis();

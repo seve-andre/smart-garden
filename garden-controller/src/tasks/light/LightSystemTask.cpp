@@ -38,6 +38,7 @@ void LightSystemTask::tick() {
 
                     if (intensity < 2) {
                         this->irrigationTask->speed = temperature;
+                        this->irrigationTask->reset();
                         this->irrigationTask->state = IrrigationTask::State::ONGOING;
                     }
                 } else {
