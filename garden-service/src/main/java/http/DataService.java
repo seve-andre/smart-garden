@@ -26,11 +26,11 @@ public class DataService extends AbstractVerticle {
     public DataService(int port) {
         values = new LinkedList<>();
         this.port = port;
-        /*try {
+        try {
             this.channel = new SerialCommChannel("COM5", 115200);
         } catch (SerialPortException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @Override
@@ -57,6 +57,10 @@ public class DataService extends AbstractVerticle {
             int temperature = res.getInteger("temperature");
             String state = res.getString("state");
 
+            if (temperature == 5) {
+                state = "alarm";
+            }
+
             values.addFirst(new DataPoint(intensity, temperature, state));
             if (values.size() > MAX_SIZE) {
                 values.removeLast();
@@ -64,8 +68,8 @@ public class DataService extends AbstractVerticle {
 
             response.setStatusCode(200).end();
 
-//            channel.sendMsg("p:" + intensity + "t:" + temperature + "s:" + state);
-            System.out.println("p:" + intensity + "t:" + temperature + "s:" + state);
+            channel.sendMsg("i:" + intensity + "t:" + temperature + "s:" + state);
+            System.out.println("i:" + intensity + "t:" + temperature + "s:" + state);
         }
     }
 
