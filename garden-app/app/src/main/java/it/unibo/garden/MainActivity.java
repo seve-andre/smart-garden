@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private final List<Button> buttons = new ArrayList<>();
     private final Timer timer = new Timer();
     private boolean isAutoModeOn = true;
-    private static final String HTTP_URL = "https://4640-95-238-240-43.eu.ngrok.io/api/data";
+    private static final String HTTP_URL = "https://511d-95-244-50-244.eu.ngrok.io/api/data";
 
     @SuppressLint("MissingPermission")
     @Override
@@ -110,7 +110,14 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (state.equals("alarm")) {
                                         findViewById(R.id.btnAlarm).setVisibility(View.VISIBLE);
-                                        findViewById(R.id.btnRequireManualMode).setEnabled(false);
+
+                                        if (findViewById(R.id.btnRequireManualMode).isEnabled()) {
+                                            findViewById(R.id.btnRequireManualMode).setEnabled(false);
+                                        } else if (findViewById(R.id.btnRequireAutoMode).isEnabled()) {
+                                            for (Button b : buttons) {
+                                                b.setEnabled(false);
+                                            }
+                                        }
 
                                         isAutoModeOn = false;
                                     }
