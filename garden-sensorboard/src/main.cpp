@@ -22,14 +22,13 @@ enum { NORMAL,
        ALARM } state;
 
 void setup() {
-    Serial.begin(115200);
     // hardware
     tempSensor = new TempSensorLM35(TEMP_SENSOR_PIN);
     lightSensor = new LightSensorImpl(PHOTORESISTOR_PIN);
     led = new Led(LED_PIN);
 
     // http
-    wifiConnector = new WifiConnector(SSID, PASSWORD);
+    wifiConnector = new WifiConnector(WIFI_SSID, PASSWORD);
     wifiConnector->connect();
     httpService = new HttpService();
 
@@ -38,35 +37,38 @@ void setup() {
 
 void loop() {
     if (wifiConnector->isConnected()) {
-        int lightIntensity = lightSensor->getLightIntensity();
-        int temperatureMapped = map(tempSensor->getTemperature(), 0, 30, 1, 5);
+        switch (state) {
+            case NORMAL: {
+                int lightIntensity = lightSensor->getLightIntensity();
+                int temperatureMapped = map(tempSensor->getTemperature(), 0, 30, 1, 5);
 
-        Serial.println(lightIntensity);
+                // post lightIntensity, temperatureMapped, state
+                int postCode = httpService->post(lightIntensity, temperatureMapped, "auto");
 
-        // post lightIntensity, temperatureMapped, stato
-        int code = httpService->post(lightIntensity, temperatureMapped, "");
+                if (postCode == 200) {
+                    Serial.println("ok");
+                } else {
+                    Serial.println(String("error: ") + postCode);
+                }
 
-        if (code == 200) {
-            Serial.println("ok");
-        } else {
-            Serial.println(String("error: ") + code);
-        }
-
-        // add check for irrigation system pause
-        if (temperatureMapped == 5) {
-            // ALARM
-            state = ALARM;
-        }
-        delay(5000);
-        /* switch (state) {
-            case NORMAL:
+                // add check for irrigation system pause
+                if (temperatureMapped == 5) {
+                    // ALARM
+                    state = ALARM;
+                }
                 led->switchOn();
                 break;
-            case ALARM:
-                led->switchOff();
-                break;
-        } */
+            }
 
+            case ALARM: {
+                led->switchOff();
+                if (httpService->getState() == "auto") {
+                    state = NORMAL;
+                }
+                break;
+            }
+        }
+        delay(5000);
     } else {
         Serial.println("WiFi Disconnected... Reconnect.");
         wifiConnector->connect();
