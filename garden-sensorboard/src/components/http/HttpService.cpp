@@ -2,17 +2,20 @@
 
 #include <ArduinoJson.h>
 
+#include "Config.h"
 #include "HTTPClient.h"
 
 DynamicJsonDocument jsonPost(1024);
 char msg[100];
 
+DynamicJsonDocument jsonGet(1024);
+
 HttpService::HttpService() {
 }
 
-int HttpService::post(int lightIntensity, int temperatureMapped, String state) {
+int HttpService::post(int lightIntensity, int temperatureMapped, const char* state) {
     HTTPClient http;
-    http.begin("https://3e3b-95-244-50-244.eu.ngrok.io/api/data");
+    http.begin(NGROK_URL);
     http.addHeader("Content-Type", "application/json");
 
     jsonPost["intensity"] = lightIntensity;
@@ -25,4 +28,28 @@ int HttpService::post(int lightIntensity, int temperatureMapped, String state) {
     http.end();
 
     return retCode;
+}
+
+const char* HttpService::getState() {
+    HTTPClient http;
+    http.begin(NGROK_URL);
+    const char* state;
+
+    int code = http.GET();
+    if (code > 0) {
+        char payload[100];
+        String jsonString = http.getString();
+        jsonString.toCharArray(payload, jsonString.length() + 1);
+
+        deserializeJson(jsonGet, payload);
+        state = jsonGet["state"];
+    } else {
+        Serial.print("Error code: ");
+        Serial.println(code);
+        state = "auto";
+    }
+
+    http.end();
+
+    return state;
 }

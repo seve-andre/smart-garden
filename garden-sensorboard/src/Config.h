@@ -5,7 +5,9 @@
 #define TEMP_SENSOR_PIN 1
 #define LED_PIN 7
 
-#define SSID ""
+#define WIFI_SSID ""
 #define PASSWORD ""
+
+#define NGROK_URL "https://511d-95-244-50-244.eu.ngrok.io/api/data"
 
 #endif
