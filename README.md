@@ -1,3 +1,7 @@
+> Assignment #3 [Embedded Systems and IoT](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/470158) - [Computer Science and Engineering](https://corsi.unibo.it/1cycle/ComputerScienceEngineering) 2021/22 UniBo
+- [detailed version](https://docs.google.com/document/d/1oD8VSHPsmvpfgtXeALszZn8Bt9sD60pmsZQmUkinLm0/edit)
+- [demo](https://liveunibo-my.sharepoint.com/:v:/g/personal/andrea_severi12_studio_unibo_it/Ebr-YQ9bWPhForXCmn0dCDIBFiw2Ak20UQRDlxhNdCWyyQ?e=LvFZex)
+- [FSM schemas](https://github.com/seve-andre/smart-garden/tree/main/doc/fsm)
 
 <div align="center">
   <img src="https://github.com/seve-andre/smart-garden/blob/main/schema.jpg" alt="subsystems schema" height="300" />
@@ -46,15 +50,8 @@ The system is composed of **5 subsystems**:
 - [Controller]:
   - [Arduino uno](https://store.arduino.cc/products/arduino-uno-rev3) board, including:
     - 4 green leds
-    - servo motor CONTINUE
-    - HC05 Bluetooth module
-## Behaviour
-
-
----
-Assignment #3 [Embedded Systems and IoT](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/470158) - [Computer Science and Engineering](https://corsi.unibo.it/1cycle/ComputerScienceEngineering) 2021/22 UniBo
-- [more detailed version](https://docs.google.com/document/d/1oD8VSHPsmvpfgtXeALszZn8Bt9sD60pmsZQmUkinLm0/edit)
-- [demo](https://liveunibo-my.sharepoint.com/:v:/g/personal/andrea_severi12_studio_unibo_it/Ebr-YQ9bWPhForXCmn0dCDIBFiw2Ak20UQRDlxhNdCWyyQ?e=LvFZex)
+    - servo motore
+    - [HC05](https://www.google.com/search?q=hc05+bluetooth) Bluetooth module
 
 <!-- Links -->
 [Sensorboard]: https://github.com/seve-andre/smart-garden/tree/main/garden-sensorboard
