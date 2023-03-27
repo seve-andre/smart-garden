@@ -1,9 +1,10 @@
 
 <div align="center">
   <img src="https://github.com/seve-andre/smart-garden/blob/main/schema.jpg" alt="subsystems schema" height="300" />
-  <h1>Smart Garden</h1>
-  <p> IoT smart garden, i.e. a smart system monitoring and controlling the state of a garden</p>
 </div>
+
+# Smart Garden
+IoT smart garden, i.e. a smart system monitoring and controlling the state of a garden
 
 The system is composed of **5 subsystems**:
 - [Sensorboard]:
