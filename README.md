@@ -1,6 +1,6 @@
 > Assignment #3 [Embedded Systems and IoT](https://www.unibo.it/en/teaching/course-unit-catalogue/course-unit/2021/470158) - [Computer Science and Engineering](https://corsi.unibo.it/1cycle/ComputerScienceEngineering) 2021/22 UniBo
 - [detailed version](https://docs.google.com/document/d/1oD8VSHPsmvpfgtXeALszZn8Bt9sD60pmsZQmUkinLm0/edit)
-- [demo](https://liveunibo-my.sharepoint.com/:v:/g/personal/andrea_severi12_studio_unibo_it/Ebr-YQ9bWPhForXCmn0dCDIBFiw2Ak20UQRDlxhNdCWyyQ?e=LvFZex)
+- [video demo](https://liveunibo-my.sharepoint.com/:v:/g/personal/andrea_severi12_studio_unibo_it/Ebr-YQ9bWPhForXCmn0dCDIBFiw2Ak20UQRDlxhNdCWyyQ?e=LvFZex)
 - [FSM schemas](https://github.com/seve-andre/smart-garden/tree/main/doc/fsm)
 
 <div align="center">
