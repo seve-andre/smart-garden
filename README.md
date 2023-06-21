@@ -4,7 +4,7 @@
 - [FSM schemas](https://github.com/seve-andre/smart-garden/tree/main/doc/fsm)
 
 <div align="center">
-  <img src="https://github.com/seve-andre/smart-garden/blob/main/schema.jpg" alt="subsystems schema" title="subsystems schema" height="300" />
+  <img src="https://github.com/seve-andre/smart-garden/blob/main/schema.jpg" alt="Subsystems schema" title="Subsystems schema" height="300" />
 </div>
 
 # Smart Garden
